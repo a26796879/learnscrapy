@@ -16,3 +16,9 @@ class PtttestItem(scrapy.Item):
     push = scrapy.Field()
     href = scrapy.Field()
     date = scrapy.Field()
+
+
+class PttImage(scrapy.Item):
+    title = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
