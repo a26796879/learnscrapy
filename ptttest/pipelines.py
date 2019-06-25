@@ -8,4 +8,5 @@
 
 class PtttestPipeline(object):
     def process_item(self, item, spider):
+        item['push'] = int(item['push'])
         return item

@@ -11,4 +11,8 @@ import scrapy
 class PtttestItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    author = scrapy.Field()
+    push = scrapy.Field()
+    href = scrapy.Field()
+    date = scrapy.Field()

@@ -1,5 +1,5 @@
 import scrapy
-
+from ..items import PtttestItem
 domain = 'https://ptt.cc'
 
 class PttSpider(scrapy.Spider):
@@ -7,16 +7,17 @@ class PttSpider(scrapy.Spider):
     start_urls = ['https://www.ptt.cc/bbs/Beauty/index.html']
 
     def parse(self, response):
+        items = PtttestItem()
         for content in response.css('div.r-ent'):
-            item = {
-                'push':content.css('div.nrec > span.hl::text').extract_first(),
-                'title':content.css('div.title > a::text').extract_first(),
-                'href':content.css('div.title > a::attr(href)').extract_first(),
-                'date':content.css('div.meta > div.date ::text').extract_first(),
-                'author':content.css('div.meta > div.author ::text').extract_first(),
-            }
+
+            items['push'] = content.css('div.nrec > span.hl::text').extract_first(),
+            items['title'] = content.css('div.title > a::text').extract_first(),
+            items['href'] = content.css('div.title > a::attr(href)').extract_first(),
+            items['date'] = content.css('div.meta > div.date ::text').extract_first(),
+            items['author'] = content.css('div.meta > div.author ::text').extract_first(),
+            
             #yield scrapy.Request(domain + content.css('div.title > a::attr(href)').extract_first(), callback = self.parse_images) 
-            yield(item)
+            yield(items)
         
         nextpg = 'http://ptt.cc' + response.css("div.btn-group.btn-group-paging > a.btn.wide::attr(href)").extract()[1]
         url = response.urljoin(nextpg)
